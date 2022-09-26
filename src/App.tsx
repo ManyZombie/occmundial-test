@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Home } from './pages/Home'
+import { Pokemons } from './pages/Pokemons'
 import { Pokemon } from './pages/Pokemon'
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Home />}/>
-      <Route path='/pokemon/:id' element={<Pokemon />}/>
-    </Routes>
+      <Routes>
+        <Route path='/' element={<Pokemons />}/>
+        <Route path='/pokemon/:id' element={<Pokemon />}/>
+      </Routes>
   )
 }
 
