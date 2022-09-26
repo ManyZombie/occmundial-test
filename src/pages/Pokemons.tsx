@@ -4,34 +4,40 @@ import { Pagination } from '../components/Pagination'
 import { PokemonResume } from '../components/PokemonResume'
 import { useAppDispatch, useAppSelector } from '../hooks/store'
 import { getPokemons, getPokemon, selectPokemonEntries, selectPokemons, selectPokemon } from '../store/pokemons.slice'
+import { useNavigate } from 'react-router-dom'
 import styles from './Pokemons.module.scss'
+import { Pokemon } from '../types/Pokemon'
 
 export function Pokemons() {
   const dispatch = useAppDispatch()
 
   const pokemons = useAppSelector(selectPokemons)
 
-  const pokemon = useAppSelector(selectPokemon)
-
   const pokemonEntries = useAppSelector(selectPokemonEntries)
 
-  function onPokemonDetails() {
-    console.log('test');
+  const navigation = useNavigate()
+
+  function onPokemonDetails(pokemon: Pokemon) {
+    navigation(`/pokemon/${pokemon.name}`)
+    dispatch(getPokemon(pokemon))
   }
 
-  function next() {
+  async function next() {
     if (!pokemonEntries) return
     if (!pokemonEntries.next) return
-    dispatch(getPokemons(pokemonEntries.next))
+    await dispatch(getPokemons(pokemonEntries.next))
+    window.scrollTo(0, 0)
   }
 
-  function previous() {    
+  async function previous() {    
     if (!pokemonEntries) return
     if (!pokemonEntries.previous) return
-    dispatch(getPokemons(pokemonEntries.previous))
+    await dispatch(getPokemons(pokemonEntries.previous))
+    window.scrollTo(0, 0)
   }
 
   useEffect(() => {
+    if (pokemons.data.length > 0) return
     dispatch(getPokemons(1))
   }, [])
 
@@ -45,14 +51,16 @@ export function Pokemons() {
           <PokemonResume 
             key={pokemon.id} 
             pokemon={pokemon} 
-            onClick={onPokemonDetails}
+            onClick={() => onPokemonDetails(pokemon)}
           />)
         }
       </div>
       
-      <div className={styles["pokemon-pagination"]} >
-        <Pagination next={next} previous={previous}/>
-      </div>
+      { pokemonEntries ?
+        <div className={styles["pokemon-pagination"]} >
+          <Pagination next={next} previous={previous}/>
+        </div> : null
+      }
 
     </div>
 
