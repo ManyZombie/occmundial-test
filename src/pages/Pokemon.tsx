@@ -24,7 +24,7 @@ export function Pokemon() {
   return (
     <div>
       <Navbar></Navbar>
-      <button className={styles['back-button']}>Regresar</button>
+      <button className={styles['back-button']} onClick={() => navigation(-1)}>Regresar</button>
       <div className={styles['pokemon-details']}>
         { pokemon.data ? <PokemonResume pokemon={pokemon.data}/> : null}
       </div>
