@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Pagination } from '../components/Pagination'
 import { PokemonResume } from '../components/PokemonResume'
 import { useAppDispatch, useAppSelector } from '../hooks/store'
 import { getPokemons, getPokemon, selectPokemonEntries, selectPokemons, selectPokemon } from '../store/pokemons.slice'
@@ -15,17 +16,31 @@ export function Pokemons() {
 
   function onPokemonDetails() {
     console.log('test');
-    
+  }
+
+  function next() {
+    if (!pokemonEntries) return
+    if (!pokemonEntries.next) return
+    dispatch(getPokemons(pokemonEntries.next))
+  }
+
+  function previous() {    
+    if (!pokemonEntries) return
+    if (!pokemonEntries.previous) return
+    dispatch(getPokemons(pokemonEntries.previous))
   }
 
   useEffect(() => {
     dispatch(getPokemons(1))
-    dispatch(getPokemon('ditto'))
   }, [])
 
   return (
     <div>
-      <h6>Pokédex</h6>
+      <nav className={styles.navbar}>
+        <h6 className={styles.title}>Pokédex</h6>
+      </nav>
+
+      
       <div className={styles["pokemon-list"]}>
         { pokemons.data.map((pokemon) => 
           <PokemonResume 
@@ -35,6 +50,11 @@ export function Pokemons() {
           />)
         }
       </div>
+      
+      <div className={styles["pokemon-pagination"]} >
+        <Pagination next={next} previous={previous}/>
+      </div>
+
     </div>
 
   )

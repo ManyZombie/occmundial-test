@@ -13,7 +13,7 @@ interface RemoteData<T> {
 export interface PokemonsState {
   pokemonEntries: PokemonEntries | null
   pokemons: RemoteData<Pokemon[] > 
-  pokemon: RemoteData<Pokemon | null>  
+  pokemon: RemoteData<Pokemon | null>
 }
 
 const initialState: PokemonsState = {
@@ -25,12 +25,12 @@ const initialState: PokemonsState = {
   pokemon: {
     data: null,
     loading: false
-  }
+  },  
 }
 
 export const getPokemons = createAsyncThunk(
   'pokemons/getPokemons', 
-  async (page: number) => getPokemonService(page),
+  async (page: number | string) => getPokemonService(page),
 )
 
 export const getPokemon = createAsyncThunk(
