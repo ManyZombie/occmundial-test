@@ -1,0 +1,39 @@
+@use '../styles/colors.scss' as *;
+
+.card {
+  padding: 16px;
+  border-radius: 1rem;
+  display: flex;
+  cursor: pointer;
+
+  div:first-child {
+    flex: 1;
+  }
+}
+
+.pokemon-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 4px 0 8px;
+  color: white;
+}
+
+.pokemon-type {
+  padding: 4px 8px;
+  color: white;
+  margin-right: 4px;
+}
+
+@each $name, $color in $colors {
+  .pokemon-type[data-type="#{$name}"] {
+    background-color: #{$color};
+    border-radius: 4px;
+  }
+}
+
+
+@each $name, $color in $backgroundColors {
+  .card[data-type="#{$name}"] {
+    background-color: #{$color};
+  }
+}
