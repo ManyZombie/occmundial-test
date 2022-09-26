@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Navbar } from '../components/Navbar'
 import { Pagination } from '../components/Pagination'
 import { PokemonResume } from '../components/PokemonResume'
 import { useAppDispatch, useAppSelector } from '../hooks/store'
@@ -36,10 +37,8 @@ export function Pokemons() {
 
   return (
     <div>
-      <nav className={styles.navbar}>
-        <h6 className={styles.title}>Pokédex</h6>
-      </nav>
 
+      <Navbar></Navbar>
       
       <div className={styles["pokemon-list"]}>
         { pokemons.data.map((pokemon) => 
